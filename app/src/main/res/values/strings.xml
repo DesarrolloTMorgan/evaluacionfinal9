@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">EvaluacionFinal9</string>
+    <string name="latitud_descripcion">La latitud es: </string>
+    <string name="longitud_descripcion">La longitud es: </string>
+    <string name="ubicacion_descripcion">La dirección de las coordenadas es: </string>
+</resources>
