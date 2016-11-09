@@ -23,10 +23,13 @@ public class ObtecionUbicacion extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        //View view = inflater.inflate(R.layout.localizacion_ubicacion, container, false);
-        //ubicacion = (TextView) view.findViewById(R.id.valor_ubicacion);
-
         return inflater.inflate(R.layout.localizacion_ubicacion, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ubicacion = (TextView) view.findViewById(R.id.valor_ubicacion);
     }
 }
