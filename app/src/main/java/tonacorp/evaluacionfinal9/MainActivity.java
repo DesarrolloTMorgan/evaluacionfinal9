@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,10 +49,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected Boolean ubicacion;
     protected String tiempo_actualizacion;
 
+
+    /*
+    * Variables para la actualización de la información
+    * */
     String guardarUbicacion1, guardarUbicacion2;
     String regresar, error;
     VariablesGlobales variabesGlobales = new VariablesGlobales();
-    ObtencionCoordenadas fragmentCoordenadas = new ObtencionCoordenadas();
+    ObtencionCoordenadas  fragmentCoordenadas;
+    FragmentManager fm = getSupportFragmentManager();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +67,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         iniciar = (Button) findViewById(R.id.iniciar);
         parar = (Button) findViewById(R.id.parar);
-        latitud = (TextView) findViewById(R.id.latitudR);
-        longitud = (TextView) findViewById(R.id.longitudR);
+        latitud = (TextView) findViewById(R.id.valor_latitud);
+        longitud = (TextView) findViewById(R.id.valor_longitud);
         //tiempo = (TextView) findViewById(R.id.tiempo);
-        ubicacionR = (TextView) findViewById(R.id.ubiR);
+        ubicacionR = (TextView) findViewById(R.id.valor_ubicacion);
+
 
         ubicacion = false;
         tiempo_actualizacion = "";
@@ -71,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         updateValuesFromBundle(savedInstanceState);
 
         buildGoogleApiClient();
+
 
     }
 
@@ -170,17 +179,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private void updateUI() {
-        latitud.setText("La latitud es: " + String.valueOf(location.getLatitude()));
-        longitud.setText("La longitud es: " + String.valueOf(location.getLongitude()));
+
         guardarUbicacion1 = String.valueOf(location.getLatitude());
         guardarUbicacion2 = String.valueOf(location.getLongitude());
         ubicacionR.setText(buscar_direccion(guardarUbicacion1, guardarUbicacion2));
+        latitud.setText("La latitud es: " + guardarUbicacion1);
+        longitud.setText("La longitud es: " + guardarUbicacion2);
 
-        variabesGlobales.setPasarLatitud(guardarUbicacion1);
-        variabesGlobales.setPasarLongitud(guardarUbicacion2);
-        fragmentCoordenadas.updateFragment();
-
-        //tiempo.setText("Útima actualización: " + tiempo_actualizacion);
     }
 
     protected void stopLocationUpdates() {
@@ -327,41 +332,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             error = "Error weon";
             return error;
         }
-
-    }
-
-    /*
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    * Enviar información
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    *
-    * */
-
-    public String enviarCoordenadas(){
-
-        String envio;
-        guardarUbicacion1 = String.valueOf(location.getLatitude());
-        guardarUbicacion2 = String.valueOf(location.getLongitude());
-
-        envio = guardarUbicacion1 + ", " + guardarUbicacion2;
-
-        return envio;
 
     }
 }

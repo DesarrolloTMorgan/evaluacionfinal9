@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 public class ObtencionCoordenadas extends Fragment {
 
-    TextView longitud, latitud;
-    VariablesGlobales variablesGlobales = new VariablesGlobales();
 
     public ObtencionCoordenadas(){
 
@@ -30,18 +28,8 @@ public class ObtencionCoordenadas extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        latitud = (TextView) view.findViewById(R.id.valor_latitud);
-        longitud = (TextView) getView().findViewById(R.id.valor_longitud);
     }
 
-    public void updateFragment(){
-
-        if(isAdded()){
-        latitud.setText(getResources().getString(R.string.latitud_descripcion) + variablesGlobales.getPasarLatitud());
-        longitud.setText(variablesGlobales.getPasarLongitud());
-        }
-
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
