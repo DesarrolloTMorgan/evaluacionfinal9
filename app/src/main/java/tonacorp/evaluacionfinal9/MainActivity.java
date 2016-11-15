@@ -5,7 +5,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     protected static final String TAG = "Actualizar_Ubicacion";
 
-    public static final long TIEMPO_ACTUALIZACION = 15000; // 10 segundos.
+    public static final long TIEMPO_ACTUALIZACION = 15000; // 10 segundos para la actualización de la ubicación.
     public static final long INTERVALO_ACTUALIZACION = TIEMPO_ACTUALIZACION / 2;
 
     protected final static String CLAVE_ACTUALIZACION = "CA";
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected Location location;
 
 
-    TextView longitud, latitud, tiempo, ubicacionR;
+    TextView longitud, latitud, tiempo, ubicacionR, precision, altitud;
     Button iniciar, parar;
 
     protected Boolean ubicacion;
@@ -53,11 +52,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     /*
     * Variables para la actualización de la información
     * */
-    String guardarUbicacion1, guardarUbicacion2;
+    String guardarUbicacion1, guardarUbicacion2, guardarAltitud, guardarPrecision;
     String regresar, error;
-    VariablesGlobales variabesGlobales = new VariablesGlobales();
-    ObtencionCoordenadas  fragmentCoordenadas;
-    FragmentManager fm = getSupportFragmentManager();
 
 
     @Override
@@ -69,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         parar = (Button) findViewById(R.id.parar);
         latitud = (TextView) findViewById(R.id.valor_latitud);
         longitud = (TextView) findViewById(R.id.valor_longitud);
-        //tiempo = (TextView) findViewById(R.id.tiempo);
+        tiempo = (TextView) findViewById(R.id.valor_tiempo);
+        precision = (TextView) findViewById(R.id.valor_precision);
+        altitud = (TextView) findViewById(R.id.valor_altitud);
         ubicacionR = (TextView) findViewById(R.id.valor_ubicacion);
 
 
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         updateValuesFromBundle(savedInstanceState);
 
-        buildGoogleApiClient();
+        buildGoogleApiClient();  //Instanciar los servicios de google
 
 
     }
@@ -137,6 +135,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         lr.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
+    /*
+    *
+    *
+    *
+    *
+    *
+    * Métodos de los botones de actualizar ubicación.
+    *
+    *
+    *
+    *
+    *
+    * */
     public void startUpdatesButtonHandler(View view) {
         if (!ubicacion) {
             ubicacion = true;
@@ -153,6 +164,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    /*
+    *
+    *
+    *
+    * Método para actualizar la ubicación
+    *
+    *
+    *
+    * */
+
     protected void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -168,25 +189,95 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
 
+    /*
+    *
+    *
+    *
+    * Método para establecer el estado de los botones
+    *
+    *
+    * */
     private void setButtonEnabledState() {
         if (ubicacion) {
             iniciar.setEnabled(false);
+            iniciar.setText("");
+            iniciar.setBackground(getResources().getDrawable(R.drawable.button_off));
             parar.setEnabled(true);
+            parar.setText(getResources().getString(R.string.boton_parar));
+            parar.setBackground(getResources().getDrawable(R.drawable.button));
         } else {
             iniciar.setEnabled(true);
+            iniciar.setText(getResources().getString(R.string.boton_iniciar));
+            iniciar.setBackground(getResources().getDrawable(R.drawable.button));
             parar.setEnabled(false);
+            parar.setText("");
+            parar.setBackground(getResources().getDrawable(R.drawable.button_off));
         }
     }
+
+    /*
+    *
+     *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      * Método para actualizar la interfaz
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+      *
+    * */
 
     private void updateUI() {
 
         guardarUbicacion1 = String.valueOf(location.getLatitude());
         guardarUbicacion2 = String.valueOf(location.getLongitude());
+        guardarPrecision = String.valueOf(location.getAccuracy());
+        guardarAltitud = String.valueOf(location.getAltitude());
+
+
         ubicacionR.setText(buscar_direccion(guardarUbicacion1, guardarUbicacion2));
-        latitud.setText("La latitud es: " + guardarUbicacion1);
-        longitud.setText("La longitud es: " + guardarUbicacion2);
+        latitud.setText(getResources().getString(R.string.latitud_descripcion)+ guardarUbicacion1);
+        longitud.setText(getResources().getString(R.string.longitud_descripcion)+ guardarUbicacion2);
+        tiempo.setText(getResources().getString(R.string.tiempo_descripcion)+tiempo_actualizacion);
+        precision.setText(getResources().getString(R.string.precision_descripcion)+guardarPrecision+"m");
+        altitud.setText(getResources().getString(R.string.altitud_descripcion)+guardarPrecision);
 
     }
+
+
+    /*
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * Métodos para completar a la actividad y sus funciones
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    *
+    * */
 
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(gac, this);
@@ -294,7 +385,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     *
     *
     *
-    * Metodo para obtener ubicación
+    * Metodo para obtener la ubicación
+    *
+    *
+    *
+    *
+    *
+    *
     *
     *
     *

@@ -35,29 +35,26 @@
         android:layout_marginBottom="26dp" />
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/button_form"
+        android:text="@string/boton_parar"
         android:id="@+id/parar"
         android:onClick="stopUpdatesButtonHandler"
-        android:layout_above="@+id/fragment_ubicacion"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginRight="37dp"
         android:layout_marginEnd="37dp"
-        android:layout_marginBottom="18dp" />
+        android:layout_marginBottom="27dp"
+        android:layout_above="@+id/fragment_ubicacion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/button_form"
+        android:text="@string/boton_iniciar"
         android:id="@+id/iniciar"
         android:onClick="startUpdatesButtonHandler"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_alignBaseline="@+id/parar"
-        android:layout_alignBottom="@+id/parar"
-        android:layout_alignLeft="@+id/longitudR"
-        android:layout_alignStart="@+id/longitudR" />
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_alignTop="@+id/parar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

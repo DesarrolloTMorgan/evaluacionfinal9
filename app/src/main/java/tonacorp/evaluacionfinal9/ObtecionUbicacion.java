@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 public class ObtecionUbicacion extends Fragment {
 
-    TextView ubicacion;
 
     public ObtecionUbicacion (){
 
@@ -30,6 +29,5 @@ public class ObtecionUbicacion extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ubicacion = (TextView) view.findViewById(R.id.valor_ubicacion);
     }
 }

@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">EvaluacionFinal9</string>
+
+    <!-- Descripciones -->
     <string name="latitud_descripcion">La latitud es: </string>
-    <string name="longitud_descripcion">La longitud es: </string>
-    <string name="ubicacion_descripcion">La dirección de las coordenadas es: </string>
+    <string name="longitud_descripcion">La longitud es:  </string>
+    <string name="tiempo_descripcion">La hora es:  </string>
+    <string name="precision_descripcion">Hay una precisión de:  </string>
+    <string name="altitud_descripcion">La altitud es:  </string>
+    <string name="ubicacion_descripcion">La dirección de las coordenadas es:  </string>
+
+    <string name="boton_iniciar">Actualizar </string>
+    <string name="boton_parar">Detener </string>
 </resources>
