@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#979797">
+    android:background="#979797"
+    android:id="@+id/coordenadas_fragment">
 
     <TextView
-        android:text="@string/latitud_descripcion"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/valor_latitud"
         android:textColor="#000000"/>
 
     <TextView
-        android:text="@string/longitud_descripcion"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/valor_longitud"

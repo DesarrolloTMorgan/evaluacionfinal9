@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 public class ObtencionCoordenadas extends Fragment {
 
-    TextView longitud, latitud;
 
     public ObtencionCoordenadas(){
 
@@ -29,7 +28,13 @@ public class ObtencionCoordenadas extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        latitud = (TextView) view.findViewById(R.id.valor_latitud);
-        longitud = (TextView) getView().findViewById(R.id.valor_longitud);
+    }
+
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
     }
 }
